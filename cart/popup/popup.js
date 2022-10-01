@@ -3,6 +3,7 @@ let openAllRememberTabs = document.getElementById("openAllRememberTabs");
 let clear = document.getElementById("clear");
 let pageCount = document.getElementById("pageCount");
 let allTabsInfo = document.getElementById("allTabsInfo");
+let privateString = ' (private)';
 
 getAllTabs.addEventListener("click", async () => {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
@@ -29,7 +30,7 @@ getAllTabs.addEventListener("click", async () => {
         chrome.storage.local.set({ tabsInfo, incognito });
         pageCount.innerText = count;
         if (incognito == true) {
-            pageCount.innerText += ', private';
+            pageCount.innerText += privateString;
         }
     });
 });
@@ -70,7 +71,7 @@ chrome.storage.local.get(["tabsInfo", 'incognito'], ({ tabsInfo, incognito }) =>
         allTabsInfo.appendChild(ul);
         pageCount.innerText = tabsInfo.length;
         if (incognito == true) {
-            pageCount.innerText += ', private';
+            pageCount.innerText += privateString;
         }
     }
 });

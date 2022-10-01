@@ -1,8 +1,8 @@
 button {
     height: 30px;
     width: 60px;
-    outline: none;
     margin: 10px;
+    outline: none;
     border: none;
     border-radius: 2px;
     color: white;
@@ -17,15 +17,23 @@ button.current {
 }
 
 .center {
-    width: 50%;
     margin: 0 auto;
     text-align: center;
 }
 
+#footer {
+    position: fixed;
+    padding: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+}
+
 p {
     color: white;
+    margin: 10px 0px 20px 15px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 ul {

@@ -5,18 +5,21 @@
 </head>
 <html>
 
-<body style="background-color: #333; padding:0px 10px 10px 10px;">
-  <p>page count : <span id="pageCount">0</span></p>
-  <div id="allTabsInfo" style="width: 400px;"></div>
-
-  <hr style="border: 0.5px solid #CCC;">
-
-  <div class="center" style="min-width: 400px;">
-    <button id="clear" style="background-color: #cd1515; float: left;">clear</button>
-    <button id="openAllRememberTabs" style="background-color: #369;">open</button>
-    <button id="getAllTabs" style="background-color: #1fa85d;">save</button>
+<body style="background-color: #333; padding:0; margin: 0; width: 400px; max-width: 400px;">
+  <div style="margin: 0px 0px 60px 0px">
+    <p>page count : <span id="pageCount">0</span></p>
+    <div id="allTabsInfo" style="margin-left: 10px"></div>
   </div>
 
+  <div id="footer">
+    <hr style="border: 0.5px solid #CCC; margin: 0; padding: 0;">
+
+    <div class="center">
+      <button id="clear" style="background-color: #cd1515; float: left;">clear</button>
+      <button id="openAllRememberTabs" style="background-color: #369;">open</button>
+      <button id="getAllTabs" style="background-color: #1fa85d;">save</button>
+    </div>
+  </div>
   <script src="popup.js"></script>
 </body>
 
