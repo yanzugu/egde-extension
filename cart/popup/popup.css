@@ -1,0 +1,52 @@
+button {
+    height: 30px;
+    width: 60px;
+    outline: none;
+    margin: 10px;
+    border: none;
+    border-radius: 2px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    float: right;
+}
+
+button.current {
+    box-shadow: 0 0 0 2px white,
+        0 0 0 4px black;
+}
+
+.center {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+p {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+ul {
+    margin-left: -10%;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+
+a:visited {
+    text-decoration: none;
+}
+
+
+a:hover {
+    text-decoration: none;
+}
+
+
+a:active {
+    text-decoration: none;
+}

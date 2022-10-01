@@ -1,0 +1,22 @@
+{
+    "name": "Cart",
+    "description": "Remember all tabs of this window.",
+    "version": "0.0.0.1",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "/popup/popup.html",
+        "default_icon": {
+            "16": "/images/cart16.png",
+            "32": "/images/cart32.png",
+            "48": "/images/cart48.png",
+            "128": "/images/cart128.png"
+        }
+    },
+    "icons": {
+        "16": "/images/cart16.png",
+        "32": "/images/cart32.png",
+        "48": "/images/cart48.png",
+        "128": "/images/cart128.png"
+    },
+    "permissions": ["storage", "tabs"]
+}
