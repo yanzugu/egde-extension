@@ -1,11 +1,12 @@
-let getAllTabs = document.getElementById("getAllTabs");
-let openAllRememberTabs = document.getElementById("openAllRememberTabs");
-let clear = document.getElementById("clear");
+let btn_saveAll = document.getElementById("btn_saveAllTabs");
+let btn_addSelected = document.getElementById("btn_addSelectedTab");
+let btn_openAll = document.getElementById("btn_openAllRememberTabs");
+let btn_clear = document.getElementById("btn_clear");
 let pageCount = document.getElementById("pageCount");
 let allTabsInfo = document.getElementById("allTabsInfo");
 let privateString = ' (private)';
 
-getAllTabs.addEventListener("click", async () => {
+btn_saveAll.addEventListener("click", async () => {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
         let ul = document.createElement('ul');
         let tabsInfo = [];
@@ -35,7 +36,40 @@ getAllTabs.addEventListener("click", async () => {
     });
 });
 
-openAllRememberTabs.addEventListener("click", async () => {
+btn_addSelected.addEventListener("click", async () => {
+    chrome.storage.local.get(["tabsInfo", 'incognito'], ({ tabsInfo, incognito }) => {
+        chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
+            let tab = tabs[0];
+
+            if (tab != undefined && !tab.url.includes('edge://') && !tab.url.includes('chrome://')) {
+                let newTabsInfo = [];
+                let ul = document.createElement('ul');
+
+                if (tabsInfo != undefined) {
+                    tabsInfo.forEach(tab => {
+                        newTabsInfo.push({ title: tab.title, url: tab.url });
+                        let li = createElement_li(tab.title, tab.url);
+                        ul.appendChild(li);
+                    });
+                }
+
+                newTabsInfo.push({ title: tab.title, url: tab.url });
+                let li = createElement_li(tab.title, tab.url);
+                ul.appendChild(li);
+
+                allTabsInfo.innerHTML = '';
+                allTabsInfo.appendChild(ul);
+                chrome.storage.local.set({ tabsInfo: newTabsInfo, incognito: incognito });
+                pageCount.innerText = newTabsInfo.length;
+                if (incognito == true) {
+                    pageCount.innerText += privateString;
+                }
+            }
+        });
+    });
+});
+
+btn_openAll.addEventListener("click", async () => {
     chrome.storage.local.get(["tabsInfo", 'incognito'], ({ tabsInfo, incognito }) => {
         if (tabsInfo != undefined) {
             if (incognito == true) {
@@ -55,7 +89,7 @@ openAllRememberTabs.addEventListener("click", async () => {
     });
 });
 
-clear.addEventListener("click", async () => {
+btn_clear.addEventListener("click", async () => {
     allTabsInfo.innerHTML = '';
     pageCount.innerText = 0;
     chrome.storage.local.clear();
@@ -91,6 +125,7 @@ function createElement_li(title, url) {
 
     li.style.listStyle = 'none';
     li.style.background = `url("${iconUrl}") no-repeat transparent`;
+    li.style.backgroundSize = `16px`;
     li.style.margin = '10px 0px';
     li.style.padding = '0px 0px 0px 24px';
     li.style.verticalAlign = 'middle';
