@@ -1,22 +1,22 @@
 {
-    "name": "Cart",
-    "description": "Remember all tabs of this window.",
+    "name": "Save My Tabs",
+    "description": "Save your tabs.",
     "version": "0.0.0.3",
     "manifest_version": 3,
     "action": {
         "default_popup": "/popup/popup.html",
         "default_icon": {
-            "16": "/images/cart16.png",
-            "32": "/images/cart32.png",
-            "48": "/images/cart48.png",
-            "128": "/images/cart128.png"
+            "16": "/images/icon16.png",
+            "32": "/images/icon32.png",
+            "48": "/images/icon48.png",
+            "128": "/images/icon128.png"
         }
     },
     "icons": {
-        "16": "/images/cart16.png",
-        "32": "/images/cart32.png",
-        "48": "/images/cart48.png",
-        "128": "/images/cart128.png"
+        "16": "/images/icon16.png",
+        "32": "/images/icon32.png",
+        "48": "/images/icon48.png",
+        "128": "/images/icon128.png"
     },
     "permissions": ["storage", "tabs"]
 }

@@ -12,15 +12,19 @@
   </div>
 
   <div id="footer">
-    <hr style="border: 0.5px solid #CCC; margin: 0; padding: 0;">
+    <hr style="border: 0.5px solid #AAA; margin: 0; padding: 0;">
 
-    <div class="center">
-      <button id="btn_edit" style="background-color: #bd7221; float: left;">edit</button>
-      <button id="btn_clear" style="background-color: #cd1515; display: none;">clear</button>
-      <button id="btn_openAllRememberTabs" style="background-color: #369;">open</button>
-      <button id="btn_saveAllTabs" style="background-color: #1fa85d;">save</button>
-      <button id="btn_addSelectedTab" style="background-color: #1839a4;">add</button>
+    <button id="btn_edit" style="background-color: #bd7221;">Edit</button>
+    <button id="btn_clear" style="background-color: #cd1515; display: none;">Clear</button>
+    <button id="btn_openAllRememberTabs" style="background-color: #369;">Open</button>
+    <button id="btn_addAllTabs" style="background-color: #1fa85d;">Add All</button>
+    <button id="btn_addSelectedTab" style="background-color: #1839a4;">Add</button>
+
+    <div style="float: left; vertical-align: middle; text-align: center; margin-top: 14px;" >
+      <input type="checkbox" id="chb_incognito" style="margin-left: 10px;"/>
+      <label for="chb_incognito">incognito</label>
     </div>
+
   </div>
   <script src="popup.js"></script>
 </body>

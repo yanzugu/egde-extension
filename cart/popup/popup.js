@@ -1,26 +1,35 @@
-let btn_saveAll = document.getElementById("btn_saveAllTabs");
+let btn_addAll = document.getElementById("btn_addAllTabs");
 let btn_addSelected = document.getElementById("btn_addSelectedTab");
 let btn_openAll = document.getElementById("btn_openAllRememberTabs");
 let btn_clear = document.getElementById("btn_clear");
 let btn_edit = document.getElementById("btn_edit");
+let chb_incognito = document.getElementById("chb_incognito");
 let pageCount = document.getElementById("pageCount");
 let allTabsInfo = document.getElementById("allTabsInfo");
-let privateString = ' (private)';
 let isEditing = false;
 let tabsInfo_list = [];
+
+chb_incognito.addEventListener('change', async (event) => {
+    chrome.storage.local.set({ incognito: event.currentTarget.checked });
+});
 
 btn_edit.addEventListener("click", async () => {
     changeEditState();
 });
 
-btn_saveAll.addEventListener("click", async () => {
+btn_addAll.addEventListener("click", async () => {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
         let ul = document.createElement('ul');
         let tabsInfo = [];
         let count = 0;
-        let incognito = false;
         allTabsInfo.innerHTML = '';
-        tabsInfo_list = [];
+
+        tabsInfo_list.forEach((tab) => {
+            let li = createElement_li(tab.title, tab.url);
+            ul.appendChild(li);
+            tabsInfo.push({ title: tab.title, url: tab.url });
+            count += 1;
+        });
 
         tabs.forEach(tab => {
             if (checkUrlValid(tab.url)) {
@@ -29,24 +38,17 @@ btn_saveAll.addEventListener("click", async () => {
                 tabsInfo.push({ title: tab.title, url: tab.url });
                 tabsInfo_list.push({ title: tab.title, url: tab.url });
                 count += 1;
-
-                if (tab.incognito == true) {
-                    incognito = tab.incognito;
-                }
             }
         });
 
         allTabsInfo.appendChild(ul);
-        chrome.storage.local.set({ tabsInfo, incognito });
+        chrome.storage.local.set({ tabsInfo });
         pageCount.innerText = count;
-        if (incognito == true) {
-            pageCount.innerText += privateString;
-        }
     });
 });
 
 btn_addSelected.addEventListener("click", async () => {
-    chrome.storage.local.get(["tabsInfo", 'incognito'], ({ tabsInfo, incognito }) => {
+    chrome.storage.local.get(["tabsInfo"], ({ tabsInfo }) => {
         chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
             let tab = tabs[0];
 
@@ -71,22 +73,19 @@ btn_addSelected.addEventListener("click", async () => {
 
                 allTabsInfo.innerHTML = '';
                 allTabsInfo.appendChild(ul);
-                chrome.storage.local.set({ tabsInfo: newTabsInfo, incognito: incognito });
+                chrome.storage.local.set({ tabsInfo: newTabsInfo });
                 pageCount.innerText = newTabsInfo.length;
-                if (incognito == true) {
-                    pageCount.innerText += privateString;
-                }
             }
         });
     });
 });
 
 btn_openAll.addEventListener("click", async () => {
-    chrome.storage.local.get(["tabsInfo", 'incognito'], ({ tabsInfo, incognito }) => {
+    chrome.storage.local.get(["tabsInfo"], ({ tabsInfo }) => {
         if (tabsInfo != undefined) {
-            if (incognito == true) {
+            if (chb_incognito.checked == true) {
                 // create private tab in same window.
-                chrome.windows.create({ url: tabsInfo[0].url, incognito: true, setSelfAsOpener: true, state: 'maximized' }, (window) => {
+                chrome.windows.create({ url: tabsInfo[0].url, incognito: chb_incognito.checked, setSelfAsOpener: true, state: 'maximized' }, (window) => {
                     for (let i = 1; i < tabsInfo.length; i++) {
                         chrome.tabs.create({ url: tabsInfo[i].url, windowId: window.id, active: false });
                     }
@@ -109,7 +108,8 @@ btn_clear.addEventListener("click", async () => {
     chrome.storage.local.clear();
 });
 
-chrome.storage.local.get(["tabsInfo", 'incognito'], ({ tabsInfo, incognito }) => {
+chrome.storage.local.get(['tabsInfo', 'incognito'], ({ tabsInfo, incognito }) => {
+    chb_incognito.checked = incognito;
     if (tabsInfo != undefined) {
         let ul = document.createElement('ul');
         tabsInfo_list = [];
@@ -121,9 +121,6 @@ chrome.storage.local.get(["tabsInfo", 'incognito'], ({ tabsInfo, incognito }) =>
         });
         allTabsInfo.appendChild(ul);
         pageCount.innerText = tabsInfo.length;
-        if (incognito == true) {
-            pageCount.innerText += privateString;
-        }
     }
 });
 
@@ -195,7 +192,6 @@ function deleteItem(url) {
         }
     }
     allTabsInfo.innerHTML = '';
-    chrome.storage.local.clear();
 
     let newTabsInfo = [];
     let ul = document.createElement('ul');
@@ -208,16 +204,8 @@ function deleteItem(url) {
 
     allTabsInfo.innerHTML = '';
     allTabsInfo.appendChild(ul);
-    if (pageCount.innerText.includes(privateString)) {
-        chrome.storage.local.set({ tabsInfo: newTabsInfo, incognito: true });
-    }
-    else {
-        chrome.storage.local.set({ tabsInfo: newTabsInfo, incognito: false });
-    }
+    chrome.storage.local.set({ tabsInfo: newTabsInfo });
     pageCount.innerText = newTabsInfo.length;
-    if (incognito == true) {
-        pageCount.innerText += privateString;
-    }
 }
 
 function changeEditState() {
@@ -226,9 +214,9 @@ function changeEditState() {
     }
     isEditing = !isEditing;
     if (isEditing) {
-        btn_edit.innerText = "cancel";
+        btn_edit.innerText = "Cancel";
         btn_clear.style.display = "block";
-        btn_saveAll.style.display = "none";
+        btn_addAll.style.display = "none";
         btn_openAll.style.display = "none";
         btn_addSelected.style.display = "none";
         var btns = document.getElementsByClassName('btn_del');
@@ -239,9 +227,9 @@ function changeEditState() {
         }
     }
     else {
-        btn_edit.innerText = "edit";
+        btn_edit.innerText = "Edit";
         btn_clear.style.display = "none";
-        btn_saveAll.style.display = "block";
+        btn_addAll.style.display = "block";
         btn_openAll.style.display = "block";
         btn_addSelected.style.display = "block";
         var btns = document.getElementsByClassName('btn_del');
