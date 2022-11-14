@@ -83,19 +83,12 @@ btn_addSelected.addEventListener("click", async () => {
 btn_openAll.addEventListener("click", async () => {
     chrome.storage.local.get(["tabsInfo"], ({ tabsInfo }) => {
         if (tabsInfo != undefined) {
-            if (chb_incognito.checked == true) {
-                // create private tab in same window.
-                chrome.windows.create({ url: tabsInfo[0].url, incognito: chb_incognito.checked, setSelfAsOpener: true, state: 'maximized' }, (window) => {
-                    for (let i = 1; i < tabsInfo.length; i++) {
-                        chrome.tabs.create({ url: tabsInfo[i].url, windowId: window.id, active: false });
-                    }
-                });
-            }
-            else {
-                tabsInfo.forEach((tab) => {
-                    chrome.tabs.create({ url: tab.url, active: false });
-                });
-            }
+            // create private tab in same window.
+            chrome.windows.create({ url: tabsInfo[0].url, incognito: chb_incognito.checked, setSelfAsOpener: true, state: 'maximized' }, (window) => {
+                for (let i = 1; i < tabsInfo.length; i++) {
+                    chrome.tabs.create({ url: tabsInfo[i].url, windowId: window.id, active: false });
+                }
+            });
         }
     });
 });
@@ -206,36 +199,38 @@ function deleteItem(url) {
     allTabsInfo.appendChild(ul);
     chrome.storage.local.set({ tabsInfo: newTabsInfo });
     pageCount.innerText = newTabsInfo.length;
+    if (newTabsInfo.length == 0) {
+        changeEditState(true);
+    }
 }
 
-function changeEditState() {
-    if (tabsInfo_list.length == 0) {
-        return;
-    }
-    isEditing = !isEditing;
-    if (isEditing) {
-        btn_edit.innerText = "Cancel";
-        btn_clear.style.display = "block";
-        btn_addAll.style.display = "none";
-        btn_openAll.style.display = "none";
-        btn_addSelected.style.display = "none";
-        var btns = document.getElementsByClassName('btn_del');
-        if (btns != undefined && btns.length > 0) {
-            for (let i = 0; i < btns.length; i++) {
-                btns[i].style.visibility = "visible";
+function changeEditState(forceChange = false) {
+    if (tabsInfo_list.length > 0 || forceChange) {
+        isEditing = !isEditing;
+        if (isEditing) {
+            btn_edit.innerText = "Cancel";
+            btn_clear.style.display = "block";
+            btn_addAll.style.display = "none";
+            btn_openAll.style.display = "none";
+            btn_addSelected.style.display = "none";
+            var btns = document.getElementsByClassName('btn_del');
+            if (btns != undefined && btns.length > 0) {
+                for (let i = 0; i < btns.length; i++) {
+                    btns[i].style.visibility = "visible";
+                }
             }
         }
-    }
-    else {
-        btn_edit.innerText = "Edit";
-        btn_clear.style.display = "none";
-        btn_addAll.style.display = "block";
-        btn_openAll.style.display = "block";
-        btn_addSelected.style.display = "block";
-        var btns = document.getElementsByClassName('btn_del');
-        if (btns != undefined && btns.length > 0) {
-            for (let i = 0; i < btns.length; i++) {
-                btns[i].style.visibility = "hidden";
+        else {
+            btn_edit.innerText = "Edit";
+            btn_clear.style.display = "none";
+            btn_addAll.style.display = "block";
+            btn_openAll.style.display = "block";
+            btn_addSelected.style.display = "block";
+            var btns = document.getElementsByClassName('btn_del');
+            if (btns != undefined && btns.length > 0) {
+                for (let i = 0; i < btns.length; i++) {
+                    btns[i].style.visibility = "hidden";
+                }
             }
         }
     }
