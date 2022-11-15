@@ -85,8 +85,13 @@ btn_openAll.addEventListener("click", async () => {
         if (tabsInfo != undefined) {
             // create private tab in same window.
             chrome.windows.create({ url: tabsInfo[0].url, incognito: chb_incognito.checked, setSelfAsOpener: true, state: 'maximized' }, (window) => {
-                for (let i = 1; i < tabsInfo.length; i++) {
-                    chrome.tabs.create({ url: tabsInfo[i].url, windowId: window.id, active: false });
+                if (window == null) {
+                    alert('Please make sure Save My Tabs is allowed in incognito mode.');
+                }
+                else {
+                    for (let i = 1; i < tabsInfo.length; i++) {
+                        chrome.tabs.create({ url: tabsInfo[i].url, windowId: window.id, active: false });
+                    }
                 }
             });
         }
@@ -208,7 +213,7 @@ function changeEditState(forceChange = false) {
     if (tabsInfo_list.length > 0 || forceChange) {
         isEditing = !isEditing;
         if (isEditing) {
-            btn_edit.innerText = "Cancel";
+            btn_edit.innerText = "Back";
             btn_clear.style.display = "block";
             btn_addAll.style.display = "none";
             btn_openAll.style.display = "none";
