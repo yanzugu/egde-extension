@@ -156,7 +156,7 @@ function createElement_li(title, url) {
     btn_del.style.margin = "0";
     btn_del.style.background = "#FF3636";
     btn_del.style.borderRadius = "10px";
-    btn_del.style.zIndex = "20";
+    btn_del.style.zIndex = "2";
     btn_del.style.position = "relative";
     if (isEditing == false) {
         btn_del.style.visibility = "hidden";
