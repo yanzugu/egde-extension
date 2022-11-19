@@ -5,16 +5,17 @@ let btn_clear = document.getElementById("btn_clear");
 let chb_incognito = document.getElementById("chb_incognito");
 let pageCount = document.getElementById("pageCount");
 let allTabsInfo = document.getElementById("allTabsInfo");
+let privateImg = document.getElementById("privateImg");
 let tabsInfo_list = [];
 
 chb_incognito.addEventListener('change', async (event) => {
     chrome.storage.local.set({ incognito: event.currentTarget.checked });
 
     if (event.currentTarget.checked) {
-        allTabsInfo.style.backgroundSize = '100px';
+        privateImg.style.display = 'block';
     }
     else {
-        allTabsInfo.style.backgroundSize = '0';
+        privateImg.style.display = 'none';
     }
 });
 
@@ -37,10 +38,10 @@ btn_clear.addEventListener("click", async () => {
 chrome.storage.local.get(['tabsInfo', 'incognito'], ({ tabsInfo, incognito }) => {
     chb_incognito.checked = incognito;
     if (chb_incognito.checked) {
-        allTabsInfo.style.backgroundSize = '100px';
+        privateImg.style.display = 'block';
     }
     else {
-        allTabsInfo.style.backgroundSize = '0';
+        privateImg.style.display = 'none';
     }
     if (tabsInfo != undefined) {
         let ul = document.createElement('ul');

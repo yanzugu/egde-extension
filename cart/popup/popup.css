@@ -18,10 +18,7 @@ button.current {
 
 #allTabsInfo {
     margin-left: 10px;
-    background-repeat: no-repeat;
-    background-image: url('/images/private1.png');
-    background-position: right bottom; 
-    background-size: 100px;
+    min-height: 40px;
 }
 
 #footer {
@@ -31,6 +28,19 @@ button.current {
     margin: 0 auto;
     width: 100%;
     z-index: 3;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #333;
+}
+
+#privateImg {
+    position: fixed;
+    padding: 0;
+    bottom: 50px;
+    right: 10px;
+    margin: 0;
+    width: 80px;
+    z-index: -1;
     text-align: center;
     vertical-align: middle;
     background-color: #333;
