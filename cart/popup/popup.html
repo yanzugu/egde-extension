@@ -7,21 +7,22 @@
 
 <body style="background-color: #333; padding:0; padding-right: 10px; margin: 0; width: 420px; max-width: 420px;">
   <div style="margin: 0px 0px 60px 0px">
-    <p>page count : <span id="pageCount">0</span></p>
-    <div id="allTabsInfo" style="margin-left: 15px"></div>
+    <p>page count : <span id="pageCount">0</span>
+      <input id="btn_openAllRememberTabs" style="height: 16px; margin: 2px 2px 0 0;" type="image"
+        src="/images/popup.png" />
+    </p>
+    <div id="allTabsInfo"></div>
   </div>
 
   <div id="footer">
     <hr style="border: 0.5px solid #AAA; margin: 0; padding: 0;">
 
-    <button id="btn_edit" style="background-color: #bd7221;">Edit</button>
-    <button id="btn_clear" style="background-color: #cd1515; display: none;">Clear</button>
-    <button id="btn_openAllRememberTabs" style="background-color: #369;">Open</button>
-    <button id="btn_addAllTabs" style="background-color: #1fa85d;">Add All</button>
-    <button id="btn_addSelectedTab" style="background-color: #1839a4;">Add</button>
+    <button id="btn_addAllTabs" style="background-color: #1fa85d;">+ All</button>
+    <button id="btn_addCurrentTab" style="background-color: #1839a4;">Add</button>
+    <button id="btn_clear" style="background-color: #cd1515;">Clear</button>
 
-    <div style="float: left; vertical-align: middle; text-align: center; margin-top: 14px;" >
-      <input type="checkbox" id="chb_incognito" style="margin-left: 10px;"/>
+    <div style="float: left; vertical-align: middle; text-align: center; margin-top: 14px;">
+      <input type="checkbox" id="chb_incognito" style="margin-left: 10px;" />
       <label for="chb_incognito">incognito</label>
     </div>
 
