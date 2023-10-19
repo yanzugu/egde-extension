@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <script src="index.js" defer></script>
+    <title>WebSocket Client Tool</title>
+</head>
+
+<body>
+    <div class="header">
+        <span style="margin: 0 10px;">Layout</span>
+        <div id="layoutBtnsContainer"></div>
+        <div style="display: flex; align-items: center; margin-left: auto; margin-right: 14px;">
+            <span>☀️</span>
+            <label class="switch" style="margin: 0 4px;">
+                <input id="themeSwitchToggle" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <span>🌙</span>
+        </div>
+    </div>
+    <div id="container"></div>
+
+    <template id="clientTemplate">
+        <div id="template-container" class="template-container m-4">
+            <div class="m-4">
+                <label>URL:</label>
+                <input id="serverUrl" type="text" value="ws://">
+                <button id="connectBtn">Open</button>
+                <button id="closeBtn" hidden>Close</button>
+            </div>
+
+            <div class="m-4">
+                <span id="connectStatus">Closed</span>
+            </div>
+
+            <hr>
+
+            <div class="m-4">
+                <button id="sendBtn" disabled>Send</button>
+                <span>[ctrl + Enter]</span>
+            </div>
+
+            <div class="m-4">
+                <textarea id="msgArea" disabled></textarea>
+            </div>
+
+            <hr>
+
+            <div class="m-4">
+                <button id="clearBtn">Clear</button>
+
+                <label class="switch" style="width: auto; margin-left: 8px;">
+                    <input id="sendMsgCheckbox" type="checkbox" checked>
+                    <div class="color-box" style="background-color: var(--send-color);"></div>
+                    <span>send</span>
+                </label>
+
+                <label class="switch" style="width: auto; margin: 0 4px;">
+                    <input id="receiveMsgCheckbox" type="checkbox" checked>
+                    <div class="color-box" style="background-color: var(--receive-color);"></div>
+                    <span>receive</span>
+                </label>
+
+                <label class="switch" style="width: auto;">
+                    <input id="infoMsgCheckbox" type="checkbox" checked>
+                    <div class="color-box" style="background: var(--test);"></div>
+                    <span>info</span>
+                </label>
+            </div>
+
+            <div id="logList" class="m-4 logList"></div>
+        </div>
+    </template>
+</body>
+
+</html>
